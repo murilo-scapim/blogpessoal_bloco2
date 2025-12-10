@@ -3,6 +3,7 @@ import { UsuarioService } from '../../usuario/services/usuario.service';
 import { JwtService } from '@nestjs/jwt';
 import { Bcrypt } from '../bcrypt/bcrypt';
 import { UsuarioLogin } from '../entities/usuariologin.entity';
+import { UsuarioSemSenha } from '../interfaces/usuario-sem-senha.interface';
 
 @Injectable()
 export class AuthService {
@@ -12,7 +13,10 @@ export class AuthService {
     private bcrypt: Bcrypt,
   ) {}
 
-  async validateUser(username: string, password: string): Promise<any> {
+  async validateUser(
+    username: string,
+    password: string,
+  ): Promise<UsuarioSemSenha | null> {
     const buscaUsuario = await this.usuarioService.findByUsuario(username);
 
     if (!buscaUsuario)
